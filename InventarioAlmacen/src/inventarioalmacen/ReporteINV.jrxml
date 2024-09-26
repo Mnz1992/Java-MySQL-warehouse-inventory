@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="751b3b4b-c81f-4cea-aa08-4a715a2a0ae5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1" fontName="SansSerif">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean ($F{TOTAL_STOCK}.intValue()<0)]]></conditionExpression>
+			<style forecolor="#990000"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="fecha1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select IdPRODUCTO,
+       NProducto,
+       I_STOCK,
+       ENTRADA,
+       DEVOLUCION,
+       PERDIDA,
+       SALIDA,
+       (COALESCE(I_STOCK,0)+COALESCE(ENTRADA,0)+COALESCE(DEVOLUCION,0)-COALESCE(PERDIDA,0)-COALESCE(SALIDA,0)) AS TOTAL_STOCK
+     
+FROM
+(SELECT prod.Cod_barras_p as IdPRODUCTO,
+        prod.Nombre_prod as NProducto,
+        
+ (SELECT COALESCE(SUM(inv.`Stock_ini`),0)
+ FROM 
+inventario inv  
+where prod.Cod_barras_p=inv.Cod_barras_p)AS I_STOCK,      
+       
+(SELECT COALESCE(SUM(factura.`Stock_Entrada`),0)
+ FROM 
+factura_entrada_cuerpo factura  join factura_entrada face
+on factura.Folio=face.Folio
+where prod.Cod_barras_p=factura.Cod_barras_p and face.Fecha_Entrada between $P{fecha1} and $P{fecha2})AS ENTRADA,
+
+(SELECT COALESCE(SUM(dev.`Cantidad_Devuelta`),0)
+ FROM 
+devolucion dev  
+where prod.Cod_barras_p=dev.Cod_barras_p and dev.Fecha_Devolucion between $P{fecha1} and $P{fecha2})AS DEVOLUCION,
+
+(SELECT COALESCE(SUM(per.`Cantidad_Perdida`),0)
+ FROM 
+perdida per  
+where prod.Cod_barras_p=per.Cod_barras_p and per.Fecha_Perdida between $P{fecha1} and $P{fecha2})AS PERDIDA,
+
+(SELECT COALESCE(sum(salida.Stock_Salida),0) 
+FROM 
+vale_cuerpo_salida salida join vale_salida vs
+on salida.ID_Salida=vs.ID_Salida
+ where prod.Cod_barras_p=salida.Cod_barras_p and vs.Fecha_Salida between $P{fecha1} and $P{fecha2})AS SALIDA
+from producto prod)QA]]>
+	</queryString>
+	<field name="IdPRODUCTO" class="java.lang.String"/>
+	<field name="NProducto" class="java.lang.String"/>
+	<field name="I_STOCK" class="java.math.BigDecimal"/>
+	<field name="ENTRADA" class="java.math.BigDecimal"/>
+	<field name="DEVOLUCION" class="java.math.BigDecimal"/>
+	<field name="PERDIDA" class="java.math.BigDecimal"/>
+	<field name="SALIDA" class="java.math.BigDecimal"/>
+	<field name="TOTAL_STOCK" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="181" y="25" width="216" height="39" uuid="b80641dc-fafa-48b8-96da-24cdca4ae60d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE INVENTARIO]]></text>
+			</staticText>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement x="397" y="44" width="138" height="20" uuid="4503fb12-cc7f-49c8-8ffa-75701398977e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="13" y="10" width="114" height="54" uuid="2e43fec9-7dc2-4d19-9164-a45e8f7799df"/>
+				<imageExpression><![CDATA["C:\\Users\\misa_\\OneDrive\\Documentos\\NetBeansProjects\\InventarioAlmacen\\logo2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="197" y="0" width="100" height="20" uuid="b9ed8669-2b39-4fdf-a936-a4083772d0fe"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="0" width="100" height="20" uuid="dcad3157-58f8-4508-9cc2-dcba681ee655"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="50" y="0" width="147" height="20" uuid="a92572a1-138e-470f-9827-370ba5cec94c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte del Inventario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="272" y="0" width="40" height="20" uuid="89c2f55e-b65d-4c8c-b12d-6b83d2ab7c81"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[al]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="100" height="20" uuid="af96e4d2-b169-4e5d-beba-feb19f5a8acf"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="2" width="100" height="20" uuid="e59d9fe1-3de6-47e8-9eab-8ae6a72b98a5"/>
+				<text><![CDATA[NProducto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="197" y="2" width="100" height="20" uuid="e3050d95-6f1e-47b3-a700-3bce1a98d20a"/>
+				<text><![CDATA[ENTRADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="312" y="2" width="100" height="20" uuid="981379da-f27d-476f-afa5-a24088d6c6f3"/>
+				<text><![CDATA[DEVOLUCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="2" width="100" height="20" uuid="a0d33281-efad-4d18-ab6f-845ad257d5d3"/>
+				<text><![CDATA[SALIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="2" width="100" height="20" uuid="db64f7f3-e91c-4fe5-b77a-49567a36bb2c"/>
+				<text><![CDATA[PERDIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="2" width="100" height="20" uuid="1f8e6b50-3e7a-4d37-88d4-2a4b1572acdb"/>
+				<text><![CDATA[STOCK INICIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="2" width="100" height="20" uuid="91fc266d-1e00-48ca-a0bc-e146196d5260"/>
+				<text><![CDATA[STOCK FINAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="6" width="100" height="20" uuid="176144d2-887a-41d5-9442-2ad66b0a1f88"/>
+				<textFieldExpression><![CDATA[$F{IdPRODUCTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="37" y="6" width="100" height="20" uuid="da938366-dc74-42d8-af2a-6418a597e526"/>
+				<textFieldExpression><![CDATA[$F{NProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="137" y="6" width="100" height="20" uuid="c03ace7a-25d5-4d5c-9db7-7f4680a20a47"/>
+				<textFieldExpression><![CDATA[$F{I_STOCK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="6" width="100" height="20" uuid="8a3ed05c-2736-47f5-9e9b-cff0f83b2471"/>
+				<textFieldExpression><![CDATA[$F{ENTRADA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="312" y="6" width="100" height="20" uuid="fc7c519b-0ff2-43d8-b58a-e8c12013af30"/>
+				<textFieldExpression><![CDATA[$F{DEVOLUCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="style1" x="455" y="6" width="100" height="20" uuid="525a88c5-4bae-4383-9a2f-240b3d30ecdf"/>
+				<textFieldExpression><![CDATA[$F{TOTAL_STOCK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="6" width="100" height="20" uuid="796c3488-090b-4e15-a820-fb435c4d44bd"/>
+				<textFieldExpression><![CDATA[$F{SALIDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="397" y="6" width="100" height="20" uuid="352c72bd-bb8c-4c1a-ba9b-59bbd20c8e1e"/>
+				<textFieldExpression><![CDATA[$F{PERDIDA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="10" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="358" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="285" width="167" height="20" uuid="14e33120-d229-45fc-8a9b-41476cf7c372"/>
+				<text><![CDATA[Nombre y Firma Jefe Almacen]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="217" y="328" width="80" height="20" uuid="b6d9678c-7784-4edd-b823-c9942c9829a4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="297" y="328" width="40" height="20" uuid="6dd1d558-1630-4dda-a373-e7b62634be59"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

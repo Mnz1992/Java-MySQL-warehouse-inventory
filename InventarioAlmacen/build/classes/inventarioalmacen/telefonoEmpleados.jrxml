@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b5f5914a-c7ba-43cf-9a65-53ca337f4962">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="curp" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$F{telefono_ID_EmpleadoT}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parameter1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="curp2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     telefono.`Tipo_Tel` AS telefono_Tipo_Tel,
+     telefono.`Numero_Tel` AS telefono_Numero_Tel,
+     telefono.`ID_EmpleadoT` AS telefono_ID_EmpleadoT
+FROM
+     `telefono` telefono
+where telefono.ID_EmpleadoT=$P{curp2}]]>
+	</queryString>
+	<field name="telefono_Tipo_Tel" class="java.lang.String"/>
+	<field name="telefono_Numero_Tel" class="java.lang.String"/>
+	<field name="telefono_ID_EmpleadoT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="39" y="0" width="100" height="20" uuid="577484f8-3d04-43c6-949c-4ac111d4011a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contacto]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="58" y="0" width="100" height="20" uuid="b75fa4f1-3cbc-4126-9134-498028df6410"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo telefono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="192" y="0" width="100" height="20" uuid="a3a7f8f4-9a7f-46c3-a450-1351279b6bac"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="58" y="0" width="100" height="20" uuid="996c41ed-4063-4511-8b32-936202abf4e4"/>
+				<textFieldExpression><![CDATA[$F{telefono_Tipo_Tel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="192" y="0" width="100" height="20" uuid="716184ff-7400-4d6e-8150-0d2bd146ab2e"/>
+				<textFieldExpression><![CDATA[$F{telefono_Numero_Tel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

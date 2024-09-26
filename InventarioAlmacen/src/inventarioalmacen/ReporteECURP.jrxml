@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="76994405-b1b9-4db6-907d-f608f1613bb6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="style1"/>
+	<subDataset name="New Dataset 1" uuid="850c9b4e-2f95-4a1c-b9dc-4c2551a9619e">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+     empleado.`ID_Empleado` AS empleado_ID_Empleado,
+     empleado.`Nombre_E` AS empleado_Nombre_E,
+     empleado.`Ap_pat` AS empleado_Ap_pat,
+     empleado.`Ap_mat` AS empleado_Ap_mat,
+     empleado.`Calle` AS empleado_Calle,
+     empleado.`Colonia` AS empleado_Colonia,
+     empleado.`CP` AS empleado_CP,
+     empleado.`Ciudad` AS empleado_Ciudad,
+     empleado.`Estado` AS empleado_Estado,
+     docempleado.`ID_Doc_Empleado` AS docempleado_ID_Doc_Empleado,
+     docempleado.`CURP` AS docempleado_CURP,
+     docempleado.`INE` AS docempleado_INE,
+     docempleado.`RFC` AS docempleado_RFC,
+     docempleado.`ID_Empleado` AS docempleado_ID_Empleado,
+     telefono.`Tipo_Tel` AS telefono_Tipo_Tel,
+     telefono.`Numero_Tel` AS telefono_Numero_Tel,
+     telefono.`ID_Empleado` AS telefono_ID_Empleado
+FROM
+     `empleado` empleado INNER JOIN `docempleado` docempleado ON empleado.`ID_Empleado` = docempleado.`ID_Empleado`
+     INNER JOIN `telefono` telefono ON empleado.`ID_Empleado` = telefono.`ID_Empleado`]]>
+		</queryString>
+		<field name="empleado_ID_Empleado" class="java.lang.String"/>
+		<field name="empleado_Nombre_E" class="java.lang.String"/>
+		<field name="empleado_Ap_pat" class="java.lang.String"/>
+		<field name="empleado_Ap_mat" class="java.lang.String"/>
+		<field name="empleado_Calle" class="java.lang.String"/>
+		<field name="empleado_Colonia" class="java.lang.String"/>
+		<field name="empleado_CP" class="java.lang.String"/>
+		<field name="empleado_Ciudad" class="java.lang.String"/>
+		<field name="empleado_Estado" class="java.lang.String"/>
+		<field name="docempleado_ID_Doc_Empleado" class="java.lang.Integer"/>
+		<field name="docempleado_CURP" class="java.io.InputStream"/>
+		<field name="docempleado_INE" class="java.lang.Object"/>
+		<field name="docempleado_RFC" class="java.lang.Object"/>
+		<field name="telefono_Tipo_Tel" class="java.lang.String"/>
+		<field name="telefono_Numero_Tel" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="curp" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\misa_\\OneDrive\\Documentos\\NetBeansProjects\\InventarioAlmacen\\src\\inventarioalmacen\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     empleado.`ID_Empleado` AS empleado_ID_Empleado,
+     empleado.`Nombre_E` AS empleado_Nombre_E,
+     empleado.`Ap_pat` AS empleado_Ap_pat,
+     empleado.`Ap_mat` AS empleado_Ap_mat,
+     empleado.`Calle` AS empleado_Calle,
+     empleado.`Colonia` AS empleado_Colonia,
+     empleado.`CP` AS empleado_CP,
+     empleado.`Ciudad` AS empleado_Ciudad,
+     empleado.`Estado` AS empleado_Estado,
+     docempleado.`CURP` AS docempleado_CURP,
+     docempleado.`INE` AS docempleado_INE,
+     docempleado.`RFC` AS docempleado_RFC
+FROM
+     `empleado` empleado INNER JOIN `docempleado` docempleado ON empleado.`ID_Empleado` = docempleado.`ID_Empleado`
+WHERE empleado.ID_Empleado=$P{curp}]]>
+	</queryString>
+	<field name="empleado_ID_Empleado" class="java.lang.String"/>
+	<field name="empleado_Nombre_E" class="java.lang.String"/>
+	<field name="empleado_Ap_pat" class="java.lang.String"/>
+	<field name="empleado_Ap_mat" class="java.lang.String"/>
+	<field name="empleado_Calle" class="java.lang.String"/>
+	<field name="empleado_Colonia" class="java.lang.String"/>
+	<field name="empleado_CP" class="java.lang.String"/>
+	<field name="empleado_Ciudad" class="java.lang.String"/>
+	<field name="empleado_Estado" class="java.lang.String"/>
+	<field name="docempleado_CURP" class="java.io.InputStream"/>
+	<field name="docempleado_INE" class="java.io.InputStream"/>
+	<field name="docempleado_RFC" class="java.io.InputStream"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="186" y="25" width="206" height="25" uuid="0fc60a51-ea2d-4ab2-8fe3-a71f849c4d53"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE EMPLEADO]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="424" y="50" width="110" height="29" uuid="16f491e3-0a1c-4a23-85bb-4a5b0d62472d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="0" width="128" height="72" uuid="a29964fd-bdde-4adc-8c99-982e45c34f9b"/>
+				<imageExpression><![CDATA["C:\\Users\\misa_\\OneDrive\\Documentos\\NetBeansProjects\\InventarioAlmacen\\logo2.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="100" height="20" uuid="d3cbc9ac-8a43-402f-9835-fb310e709803"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos Empleado]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="100" height="20" uuid="458ec6d3-2b09-4c6d-bb6e-56de738484f4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="2" width="100" height="20" uuid="8efe319d-2f30-4099-b2e2-490b8abf276e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="2" width="100" height="20" uuid="c0a29fee-5f0c-44cb-97ab-3229aa0d80c0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido P.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="2" width="100" height="20" uuid="b76b8ebd-2181-4c90-8e23-0ca0c8568df6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido P.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="85" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="0" width="100" height="20" uuid="ea3fb589-af24-4592-b9c3-36df3427debf"/>
+				<textFieldExpression><![CDATA[$F{empleado_ID_Empleado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="128" y="0" width="100" height="20" uuid="ec3afc30-fc5f-4760-82e9-fdf2274b2673"/>
+				<textFieldExpression><![CDATA[$F{empleado_Nombre_E}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="246" y="0" width="100" height="20" uuid="e816e2d8-8826-4230-b16a-df837d05ae82"/>
+				<textFieldExpression><![CDATA[$F{empleado_Ap_pat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="369" y="0" width="100" height="20" uuid="cab3a39c-43d4-4bc8-826c-0cf2fec16313"/>
+				<textFieldExpression><![CDATA[$F{empleado_Ap_mat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="60" width="100" height="20" uuid="13604c2e-4686-4af4-8050-e0dafaa11a7c"/>
+				<textFieldExpression><![CDATA[$F{empleado_Calle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="40" width="100" height="20" uuid="5736a005-bb06-4aaf-8d6c-15062cbbfc8a"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Calle"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="116" y="60" width="100" height="20" uuid="8984c0d0-9224-40a3-9cf4-65d92e4d7a73"/>
+				<textFieldExpression><![CDATA[$F{empleado_Colonia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="116" y="40" width="100" height="20" uuid="273e1edc-91e9-427b-ab32-8bb7bef0a271"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Colonia"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="228" y="60" width="100" height="20" uuid="c44aac69-a2cd-4f1b-931d-a7a1a357b06a"/>
+				<textFieldExpression><![CDATA[$F{empleado_CP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="228" y="40" width="100" height="20" uuid="50b8e902-378c-4317-840d-2887cab08d5e"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["C.P."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="346" y="60" width="100" height="20" uuid="14abcce1-2dda-4b14-9b27-534e73daaedf"/>
+				<textFieldExpression><![CDATA[$F{empleado_Ciudad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="346" y="40" width="100" height="20" uuid="80f872df-a3c7-4757-bd46-c3cbeaaeedac"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ciudad"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="469" y="60" width="100" height="20" uuid="f9985a53-2d5c-44d7-a4e9-7e734509b547"/>
+				<textFieldExpression><![CDATA[$F{empleado_Estado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="469" y="40" width="100" height="20" uuid="f355d6bc-a444-4ad9-ab8b-a034d42f2b6f"/>
+				<textElement markup="none">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Estado"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="0" y="20" width="100" height="20" uuid="b73c981e-2583-4bfd-8ca8-cb1378b3a313"/>
+				<textElement markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Direccion"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="551">
+			<subreport>
+				<reportElement x="43" y="0" width="426" height="106" uuid="76d4c731-259b-4985-ae44-fbd74b47e453"/>
+				<subreportParameter name="curp2">
+					<subreportParameterExpression><![CDATA[$F{empleado_ID_Empleado}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "telefonoEmpleados.jasper"]]></subreportExpression>
+			</subreport>
+			<image scaleImage="FillFrame" onErrorType="Icon">
+				<reportElement isPrintRepeatedValues="false" x="26" y="149" width="508" height="350" uuid="3f712c2e-a950-4140-ac45-ca4628c5bd2e"/>
+				<imageExpression><![CDATA[$F{docempleado_CURP}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="86" y="106" width="100" height="20" uuid="099ac35b-bbba-46ca-9f36-d8b4516b5bed"/>
+				<textElement markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["CURP"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="228" y="11" width="80" height="20" uuid="cf88dd84-b7b3-40ee-b1b6-04c555a31f5f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="308" y="11" width="40" height="20" uuid="01e49e65-8e4c-428b-8dfb-e27b95f1717f"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
